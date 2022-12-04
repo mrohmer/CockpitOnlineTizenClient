@@ -1,0 +1,28 @@
+{
+  "name": "carrera-live-tizen",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "rimraf tizen/build && yarn build:ts && yarn build:sass",
+    "build:ts": "rollup -c --bundleConfigAsCjs",
+    "build:sass": "sass styles/index.scss tizen/build/index.css --no-source-map"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^23.0.3",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^10.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^3.5.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-scss": "3",
+    "sass": "^1.56.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.20.5",
+    "postcss": "^8.4.19"
+  }
+}

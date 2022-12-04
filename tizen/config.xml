@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="https://carrera-live.rohmer.rocks/tizen" version="1.0.0" viewmodes="maximized">
+    <access origin="https://carrera-live.rohmer.rocks" subdomains="true"></access>
+    <access origin="https://rohmer.rocks" subdomains="true"></access>
+    <access origin="https://638d0f1158da5600083beac3--illustrious-malabi-8ba57a.netlify.app" subdomains="true"></access>
+    <access origin="https://netlify.app" subdomains="true"></access>
+    <access origin="*" subdomains="true"></access>
+    <tizen:application id="FeqT3cmLrw.BasicUI" package="FeqT3cmLrw" required_version="4.0"/>
+    <author href="https://matthias.rohmer.rocks" email="m@rohmer.rocks">Matthias Rohmer</author>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <feature name="http://tizen.org/feature/network.internet"/>
+    <icon src="icon.png"/>
+    <name>CarreraLive</name>
+    <tizen:privilege name="http://tizen.org/privilege/power"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:profile name="wearable"/>
+</widget>
