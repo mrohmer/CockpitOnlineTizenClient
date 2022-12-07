@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Loader from './Loader';
+import Loading from './Loading';
 import {fetch} from '../utils/fetch';
 import {ApiData} from '../models/api-data';
 import {Race} from '../models/race';
@@ -46,10 +46,10 @@ export default function App() {
   )
 
   return (
-    <>
-      {loading && <Loader />}
+    <div>
+      {loading && <Loading />}
       {data?.data?.slots?.length && !err && <RaceComp race={data.data} date={data.date} />}
       {!data?.data?.slots?.length || err && <Error error={err ?? "Keine Slots gefunden"} /> }
-    </>
+    </div>
   )
 }

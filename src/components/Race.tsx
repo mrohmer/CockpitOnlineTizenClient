@@ -25,12 +25,12 @@ export default function Race({race, date}: Record<'race', Race> & Record<'date',
   )
 
   return (
-    <div className="race">
+    <div>
       {race.slots.map((slot, index) =>
         <Slot key={slot.id}
               slot={slot}
               date={date}
-              className={page === index ? 'visible' : ''}/>
+              visible={page === index} />
       )}
     </div>
   )
