@@ -1,37 +1,91 @@
 import React, {useEffect, useState} from 'react';
 import {Race} from '../models/race';
 import Slot from './Slot';
+import styled from 'styled-components';
+
+const Root = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
+const SlotContainer = styled.div`
+  transition: transform 0.2s;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  ${({position}: Record<'position',number>) => `transform: translateX(${position === 0 ? 0 : `-${position * 50}%`})`}
+`;
+const PageSwitchArea = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 15vw;
+  z-index: 10;
+`;
+const PageSwitchAreaRight = styled(PageSwitchArea)`
+  right: 0;
+`;
+const PageSwitchAreaLeft = styled(PageSwitchArea)`
+  left: 0;
+`;
 
 export default function Race({race, date}: Record<'race', Race> & Record<'date', string>) {
   const [page, setPage] = useState<number>(0);
+  const [pageHistory, setPageHistory] = useState<number[]>([]);
 
+  const handlePageChange = (diff: number) => {
+    let tmpPage = page + diff;
+
+    tmpPage = Math.max(Math.min(tmpPage ?? 0, race.slots.length - 1), 0)
+
+    if (tmpPage !== page) {
+      setPageHistory([...pageHistory, page]);
+      setPage(tmpPage);
+    }
+  };
   const handleRotate = (ev: any) => {
     const direction = ev.detail.direction;
 
-    let tmpPage = page + +(direction === 'CW') * 2 - 1;
-    if (tmpPage >= race.slots.length) {
-      tmpPage = 0;
-    } else if (tmpPage < 0) {
-      tmpPage = race.slots.length - 1;
+    handlePageChange(+(direction === 'CW') * 2 - 1);
+  };
+  const handleBack = () => {
+    if (!pageHistory.length) {
+      return;
     }
 
+    const tmpPageHistory = [...pageHistory];
+    const tmpPage = tmpPageHistory.pop()!;
+
+    setPageHistory(tmpPageHistory);
     setPage(tmpPage);
   }
   useEffect(
     () => {
       document.addEventListener('rotarydetent', handleRotate);
-      return () => document.removeEventListener('rotarydetent', handleRotate)
+      document.addEventListener('tizenhwkey', handleBack);
+      return () => {
+        document.removeEventListener('rotarydetent', handleRotate);
+        document.removeEventListener('tizenhwkey', handleBack);
+      }
     }
   )
 
   return (
-    <div>
-      {race.slots.map((slot, index) =>
-        <Slot key={slot.id}
-              slot={slot}
-              date={date}
-              visible={page === index} />
-      )}
-    </div>
+    <Root>
+      <SlotContainer position={page ?? 0}>
+        {race.slots.map((slot, index) =>
+          <Slot key={slot.id}
+                slot={slot}
+                date={date}
+                visible={page === index}
+                tiltDirection={page === index ? undefined : (page > index ? 'right' : 'left')}
+          />
+        )}
+      </SlotContainer>
+      <PageSwitchAreaLeft onClick={() => handlePageChange(-1)} />
+      <PageSwitchAreaRight onClick={() => handlePageChange(1)} />
+    </Root>
   )
 }
