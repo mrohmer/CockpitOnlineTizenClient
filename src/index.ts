@@ -1,5 +1,5 @@
-import {sessionView} from './views';
-import {exchangeView} from './utils/exchange-view';
+import {bootstrap} from './components/bootstrap';
+import "core-js";
 
 declare var tizen: any;
 
@@ -11,5 +11,10 @@ window.onload = function () {
 
   tizen.power.request("SCREEN", "SCREEN_NORMAL");
 
-  exchangeView(rootEl, sessionView('cma22'));
+  try {
+    bootstrap(rootEl);
+  } catch (e) {
+    rootEl.style.background = 'red';
+    rootEl.innerHTML = String(e);
+  }
 };
