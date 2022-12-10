@@ -18,11 +18,29 @@ const Text = styled.div`
   font-size: 20px;
 `;
 export default function Error({error}: Record<'error', string | any>) {
+  const errorToString = (): string => {
+    if (!error) {
+      return '🤷';
+    }
+    if (typeof error === 'string') {
+      return error;
+    }
+    if (typeof error === 'object') {
+      if (error.message) {
+        return error.message;
+      }
+      if (error.toString?.() && error.toString() !== {}.toString()) {
+        return error.toString();
+      }
+    }
+
+    return '🤷';
+  }
   return (
     <Root>
       <Icon>!</Icon>
       <Text>
-        {error}
+        {errorToString()}
       </Text>
     </Root>
   )

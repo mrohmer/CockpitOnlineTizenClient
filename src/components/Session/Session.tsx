@@ -24,14 +24,15 @@ export default function Session ({sessionName, onBack}: Record<'sessionName', st
       sec * 1000);
   }
   const execFetch = async () => {
-    setErr(undefined);
 
     const baseUrl = 'https://carrera-live.rohmer.rocks';
     try {
       setData(await fetch<ApiData<Race>>(`${baseUrl}/api/sessions/${sessionName}`));
+      setErr(undefined);
       setLoading(false);
       scheduleFetch(1);
     } catch (e) {
+      setLoading(false);
       setErr(e);
       scheduleFetch(5);
     }
@@ -49,11 +50,19 @@ export default function Session ({sessionName, onBack}: Record<'sessionName', st
     },
     [],
   )
+  const handleBack = () => onBack?.();
+  useEffect(
+    () => {
+      document.addEventListener('tizenhwkey', handleBack);
+      return () => {
+        document.removeEventListener('tizenhwkey', handleBack);
+      }
+    }
+  )
  return (
    <div>
      {loading && <Loading />}
-     {data?.data?.slots?.length && !err && <Slots race={data.data} date={data.date} onBack={onBack} />}
-     {!data?.data?.slots?.length || err && <Error error={err ?? "Keine Slots gefunden"} /> }
+     {data?.data?.slots?.length && !err ? <Slots race={data.data} date={data.date} /> : <Error error={err ?? "Keine Slots gefunden"} /> }
    </div>
  )
 }

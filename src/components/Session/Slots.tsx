@@ -31,7 +31,7 @@ const PageSwitchAreaLeft = styled(PageSwitchArea)`
   left: 0;
 `;
 
-export default function Slots({race, date, onBack}: Record<'race', Race> & Record<'date', string> & Partial<Record<'onBack', () => void>>) {
+export default function Slots({race, date}: Record<'race', Race> & Record<'date', string>) {
   const [page, setPage] = useState<number>(0);
 
   const handlePageChange = (diff: number) => {
@@ -43,7 +43,6 @@ export default function Slots({race, date, onBack}: Record<'race', Race> & Recor
       setPage(tmpPage);
     }
   };
-  const handleBack = () => onBack?.();
   const handleRotate = (ev: any) => {
     const direction = ev.detail.direction;
 
@@ -52,10 +51,8 @@ export default function Slots({race, date, onBack}: Record<'race', Race> & Recor
   useEffect(
     () => {
       document.addEventListener('rotarydetent', handleRotate);
-      document.addEventListener('tizenhwkey', handleBack);
       return () => {
         document.removeEventListener('rotarydetent', handleRotate);
-        document.removeEventListener('tizenhwkey', handleBack);
       }
     }
   )
