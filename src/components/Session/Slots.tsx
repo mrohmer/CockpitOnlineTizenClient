@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Race} from '../models/race';
+import {Race} from '../../models/race';
 import Slot from './Slot';
 import styled from 'styled-components';
 
@@ -31,9 +31,8 @@ const PageSwitchAreaLeft = styled(PageSwitchArea)`
   left: 0;
 `;
 
-export default function Race({race, date}: Record<'race', Race> & Record<'date', string>) {
+export default function Slots({race, date, onBack}: Record<'race', Race> & Record<'date', string> & Partial<Record<'onBack', () => void>>) {
   const [page, setPage] = useState<number>(0);
-  const [pageHistory, setPageHistory] = useState<number[]>([]);
 
   const handlePageChange = (diff: number) => {
     let tmpPage = page + diff;
@@ -41,26 +40,15 @@ export default function Race({race, date}: Record<'race', Race> & Record<'date',
     tmpPage = Math.max(Math.min(tmpPage ?? 0, race.slots.length - 1), 0)
 
     if (tmpPage !== page) {
-      setPageHistory([...pageHistory, page]);
       setPage(tmpPage);
     }
   };
+  const handleBack = () => onBack?.();
   const handleRotate = (ev: any) => {
     const direction = ev.detail.direction;
 
     handlePageChange(+(direction === 'CW') * 2 - 1);
   };
-  const handleBack = () => {
-    if (!pageHistory.length) {
-      return;
-    }
-
-    const tmpPageHistory = [...pageHistory];
-    const tmpPage = tmpPageHistory.pop()!;
-
-    setPageHistory(tmpPageHistory);
-    setPage(tmpPage);
-  }
   useEffect(
     () => {
       document.addEventListener('rotarydetent', handleRotate);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Slot} from '../models/slot';
+import {Slot} from '../../models/slot';
 import RemainingGas from './RemainingGas';
 import styled from 'styled-components';
 
