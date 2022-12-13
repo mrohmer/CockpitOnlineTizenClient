@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Slot} from '../../models/slot';
 import RemainingGas from './RemainingGas';
 import styled from 'styled-components';
+import {createVibrationNotifier, VibrationNotifier} from '../../utils/vibration';
+import RemainingGasVibration from './RemainingGasVibration';
 
 
 const slotColor = (id: Slot['id']): string => ({
@@ -102,6 +104,8 @@ export default function Slot({slot, date: dateStr, visible, tiltDirection}: Reco
   const date = dateStr ? new Date(dateStr) : undefined;
   return (
     <Root visible={visible ?? false} tiltDirection={tiltDirection}>
+      <RemainingGasVibration id={slot.id} remainingGas={slot.remainingGas} visible={visible ?? false} />
+
       <Indicator color={slotColor(slot.id)}></Indicator>
 
       {slot.remainingGas &&
