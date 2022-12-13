@@ -1,5 +1,5 @@
 import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
 
 const getColor = (value: number): string => {
   if (value > 0.8) {
@@ -54,19 +54,24 @@ const Bar = styled.circle`
   stroke: ${({color}: BarProps) => color ?? '#000'};
   stroke-dashoffset: ${({pct}: BarProps) => pct ?? 0}px;
   stroke-dasharray: ${({c}: BarProps) => c ?? 0};
-  ${({pulsing}: BarProps) => pulsing ? `animation: ${pulseAnimation} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;` : ''}
+  ${({pulsing}: BarProps) => pulsing ? css`animation: ${pulseAnimation} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;` : ''}
 `;
 
 export default function RemainingGas({remainingGas}: Record<'remainingGas', number>) {
   const [bbox, ref] = useBbox();
   const [c, setC] = useState<number | undefined>(undefined);
   const [pct, setPct] = useState<number | undefined>(undefined);
-  let value = remainingGas;
-  if (value < 0 || !value) {
-    value = 0;
-  } else if (value > 1) {
-    value = 1;
-  }
+  const [value, setValue] = useState<number>(remainingGas);
+
+  useEffect(() => {
+    if (remainingGas < 0 || !remainingGas) {
+      setValue(0)
+    } else if (remainingGas > 1) {
+      setValue(1)
+    } else {
+      setValue(remainingGas)
+    }
+  }, [remainingGas]);
 
   useEffect(() => {
     const {width} = bbox;
@@ -75,7 +80,7 @@ export default function RemainingGas({remainingGas}: Record<'remainingGas', numb
 
     setC(tmpC);
     setPct(tmpPct);
-  }, [bbox]);
+  }, [bbox, value]);
 
   return (
     <Svg className="gas" ref={ref}>
