@@ -5,6 +5,7 @@ import Error from './Error';
 import {ApiData} from '../../models/api-data';
 import {Race} from '../../models/race';
 import {fetch} from '../../utils/fetch';
+import {Slot} from '../../models/slot';
 
 export default function Session ({sessionName, onBack}: Record<'sessionName', string> & Partial<Record<'onBack', () => void>>) {
   let timer: number|undefined;
@@ -58,11 +59,16 @@ export default function Session ({sessionName, onBack}: Record<'sessionName', st
         document.removeEventListener('tizenhwkey', handleBack);
       }
     }
-  )
+  );
+
+  const compareSlots = ({id: a}: Slot, {id: b}: Slot) => a.localeCompare(b);
+
  return (
    <div>
      {loading && <Loading />}
-     {data?.data?.slots?.length && !err ? <Slots race={data.data} date={data.date} /> : <Error error={err ?? "Keine Slots gefunden"} /> }
+     {data?.data?.slots?.length && !err
+       ? <Slots race={{...data.data, slots: data.data.slots.sort(compareSlots)}} date={data.date} />
+       : <Error error={err ?? "Keine Slots gefunden"} /> }
    </div>
  )
 }
