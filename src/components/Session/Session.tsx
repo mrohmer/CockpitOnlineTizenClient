@@ -7,6 +7,8 @@ import {Race} from '../../models/race';
 import {fetch} from '../../utils/fetch';
 import {Slot} from '../../models/slot';
 
+declare var tizen: any;
+
 export default function Session ({sessionName, onBack}: Record<'sessionName', string> & Partial<Record<'onBack', () => void>>) {
   let timer: number|undefined;
   const [loading, setLoading] = useState(true);
@@ -41,6 +43,11 @@ export default function Session ({sessionName, onBack}: Record<'sessionName', st
 
   useEffect(
     () => {
+      try {
+        tizen.power.request("SCREEN", "SCREEN_NORMAL");
+      } catch (e) {
+        console.error(e);
+      }
       execFetch().then();
       return () => {
         if (timer) {
