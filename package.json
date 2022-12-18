@@ -1,5 +1,5 @@
 {
-  "name": "carrera-live-tizen",
+  "name": "@rohmer/cockpit-online-tizen",
   "version": "0.1.0",
   "private": true,
   "scripts": {

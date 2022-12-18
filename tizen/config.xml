@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="https://carrera-live.rohmer.rocks/tizen" version="1.0.0" viewmodes="maximized">
+<widget xmlns:tizen="http://tizen.org/ns/widgets" xmlns="http://www.w3.org/ns/widgets" id="https://cockpit-online.rohmer.rocks/tizen" version="1.0.0" viewmodes="maximized">
     <access origin="https://carrera-live.rohmer.rocks" subdomains="true"></access>
+    <access origin="https://cockpit-online.rohmer.rocks" subdomains="true"></access>
     <access origin="https://netlify.app" subdomains="true"></access>
-    <tizen:application id="N2FWPFIS2e.CarreraLive" package="N2FWPFIS2e" required_version="4.0"/>
+    <tizen:application id="N2FWPFIS2e.CockpitOnline" package="N2FWPFIS2e" required_version="4.0"/>
     <author href="https://matthias.rohmer.rocks" email="m@rohmer.rocks">Matthias Rohmer</author>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <feature name="http://tizen.org/feature/network.internet"/>
     <icon src="icon.png"/>
-    <name>CarreraLive</name>
+    <name>Cockpit Online by MRohmer</name>
     <tizen:privilege name="http://tizen.org/privilege/power"/>
     <tizen:privilege name="http://tizen.org/privilege/internet"/>
     <tizen:profile name="wearable"/>

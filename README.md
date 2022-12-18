@@ -1,6 +1,6 @@
-# Tizen/Samsung Watch Client for carrera-live.rohmer.rocks
+# Tizen/Samsung Watch Client for Cockpit XP Online via cockpit-online.rohmer.rocks
 
-Client App for Tizen/Samsung watches to show live data from [Cocikpit XP](https://www.cockpit-xp.de/) via [carrera-live.rohmer.rocks](https://carrera-live.rohmer.rocks).
+Client App for Tizen/Samsung watches to show live data from [Cockpit XP](https://www.cockpit-xp.de/) via [cockpit-online.rohmer.rocks](https://cockpit-online.rohmer.rocks).
 
 ## Supported Devices
 

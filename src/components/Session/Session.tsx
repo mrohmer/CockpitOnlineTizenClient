@@ -28,7 +28,7 @@ export default function Session ({sessionName, onBack}: Record<'sessionName', st
   }
   const execFetch = async () => {
 
-    const baseUrl = 'https://carrera-live.rohmer.rocks';
+    const baseUrl = 'https://cockpit-online.rohmer.rocks';
     try {
       setData(await fetch<ApiData<Race>>(`${baseUrl}/api/sessions/${sessionName}`));
       setErr(undefined);
